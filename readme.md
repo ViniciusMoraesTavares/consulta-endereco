@@ -46,7 +46,7 @@ Sistema desenvolvido para consulta de endereços através de CEP, com interface 
 1. Clone o repositório
 
 ```bash
-git clone [URL_DO_REPOSITÓRIO]
+git clone https://github.com/ViniciusMoraesTavares/consulta-endereco.git
 ```
 
 2. Instale as dependências
@@ -98,5 +98,5 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ---
 
 <div align="center">
-  <sub>Desenvolvidopor Vinícius Moraes Tavares</sub>
+  <sub>Desenvolvido por Vinícius Moraes Tavares</sub>
 </div>
