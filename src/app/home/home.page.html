@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sistema de Endereço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <ion-button expand="block" routerLink="/endereco" class="main-button">
+    <ion-icon name="location-outline" slot="start"></ion-icon>
+    Ir para Consulta de Endereço
+  </ion-button>
+
+  <div class="dog-section">
+    <h2>Veja um {{animalType === 'dog' ? 'doguinho' : 'gatinho'}} aleatório para alegrar seu dia {{animalType === 'dog' ? '🐶' : '🐱'}}</h2>
+
+    <ion-card *ngIf="animalImage" class="dog-card">
+      <div class="image-container">
+        <img [src]="animalImage" [alt]="animalType === 'dog' ? 'Dog Image' : 'Cat Image'" />
+      </div>
+    </ion-card>
+
+    <div class="animal-buttons">
+      <ion-button expand="block" (click)="carregarDoguinho()" class="dog-button" [class.active]="animalType === 'dog'">
+        <ion-icon name="paw-outline" slot="start"></ion-icon>
+        Mostrar outro doguinho
+      </ion-button>
+
+      <ion-button expand="block" (click)="carregarGatinho()" class="cat-button" [class.active]="animalType === 'cat'">
+        <ion-icon name="paw-outline" slot="start"></ion-icon>
+        Mostrar outro gatinho
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

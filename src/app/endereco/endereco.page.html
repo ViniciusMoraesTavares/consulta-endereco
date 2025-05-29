@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Consulta de Endereço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <ion-button (click)="voltarHome()" class="back-button">
+    <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+    Voltar
+  </ion-button>
+
+  <ion-segment [(ngModel)]="modoBusca" color="primary">
+    <ion-segment-button value="cep">
+      <ion-label>Buscar por CEP</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="manual">
+      <ion-label>Buscar manualmente</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- BUSCA POR CEP -->
+  <div *ngIf="modoBusca === 'cep'" style="margin-top: 20px;">
+    <ion-item>
+      <ion-label>CEP</ion-label>
+      <ion-input 
+        [(ngModel)]="cep" 
+        (keydown.enter)="buscarCep()"
+        placeholder="Ex: 12345-678"
+        maxlength="9"
+        [disabled]="false">
+      </ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="buscarCep()">
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+      Buscar CEP
+    </ion-button>
+
+    <ion-card *ngIf="endereco">
+      <ion-card-header>
+        <ion-card-title>Dados do Endereço</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+        <p><strong>Logradouro:</strong> {{ endereco.logradouro }}</p>
+        <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
+        <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
+        <p><strong>Cidade:</strong> {{ endereco.localidade }}</p>
+        <p><strong>Estado (Sigla):</strong> {{ endereco.uf }}</p>
+        <p><strong>Estado (Nome):</strong> {{ endereco.estado }}</p>
+        <p><strong>Região:</strong> {{ endereco.regiao }}</p>
+        <p><strong>IBGE:</strong> {{ endereco.ibge }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- BUSCA MANUAL -->
+  <div *ngIf="modoBusca === 'manual'" style="margin-top: 20px;">
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="estadoSelecionado" (ionChange)="carregarCidades()" [disabled]="false" placeholder="Selecione o estado">
+        <ion-select-option *ngFor="let estado of estados" [value]="estado.sigla">
+          {{ estado.nome }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="cidades.length > 0">
+      <ion-label>Cidade</ion-label>
+      <ion-select [(ngModel)]="cidadeSelecionada" [disabled]="false" placeholder="Selecione a cidade">
+        <ion-select-option *ngFor="let cidade of cidades" [value]="cidade.nome">
+          {{ cidade.nome }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Logradouro</ion-label>
+      <ion-input [(ngModel)]="logradouro" [disabled]="false" placeholder="Ex: Rua das Flores"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bairro</ion-label>
+      <ion-input [(ngModel)]="bairro" [disabled]="false" placeholder="Ex: Centro"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Número</ion-label>
+      <ion-input [(ngModel)]="numero" [disabled]="false" type="text" placeholder="Ex: 123"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Complemento</ion-label>
+      <ion-input [(ngModel)]="complemento" [disabled]="false" placeholder="Ex: Apto 101"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="buscarCepPorEndereco()">
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+      Buscar CEP
+    </ion-button>
+
+    <!-- lista de CEPs encontrados -->
+    <ion-list *ngIf="cepsEncontrados.length > 1" style="margin-top: 10px;">
+      <ion-list-header>
+        <ion-label>Selecione o CEP</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let cep of cepsEncontrados" button (click)="selecionarCep(cep)" detail>
+        <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ cep.cep }}</h2>
+          <p>{{ cep.logradouro }}, {{ cep.bairro }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!-- CEP selecionado -->
+    <ion-card *ngIf="cepSelecionado" style="margin-top: 20px;">
+      <ion-card-header>
+        <ion-card-title>Endereço Selecionado</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+        <p><strong>Logradouro:</strong> {{ endereco.logradouro }}</p>
+        <p><strong>Complemento:</strong> {{ endereco.complemento }}</p>
+        <p><strong>Bairro:</strong> {{ endereco.bairro }}</p>
+        <p><strong>Cidade:</strong> {{ endereco.localidade }}</p>
+        <p><strong>Estado (Sigla):</strong> {{ endereco.uf }}</p>
+        <p><strong>Estado (Nome):</strong> {{ endereco.estado }}</p>
+        <p><strong>Região:</strong> {{ endereco.regiao }}</p>
+        <p><strong>IBGE:</strong> {{ endereco.ibge }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
